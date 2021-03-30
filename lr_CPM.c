@@ -13,7 +13,7 @@ double cost (int nn, double vx[], double vy[], double t0, double t1)
  {
   int i;
   double val,sum=0.0;
-
+  #pragma omp parallel for default(none) reduction(+:sum) firstprivate(t0, t1, nn) private(i, val) shared(vx, vy) 
   for(i=0;i<nn;i++)
    {
     val = t0 + t1*vx[i] - vy[i];
