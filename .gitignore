@@ -1,6 +1,11 @@
 # Prerequisites
 *.d
 
+# Specific
+result/*
+time/*
+!result/seq.result
+
 # Object files
 *.o
 *.ko
