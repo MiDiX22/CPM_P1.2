@@ -10,21 +10,21 @@ double X[N];
 double Y[N];
 
 double cost (int nn, double vx[], double vy[], double t0, double t1)
- {
+{
   int i;
   double val,sum=0.0;
   #pragma omp parallel for default(none) reduction(+:sum) firstprivate(t0, t1, nn) private(i, val) shared(vx, vy) 
   for(i=0;i<nn;i++)
-   {
+  {
     val = t0 + t1*vx[i] - vy[i];
     sum += val * val;
-   }
+  }
   sum /= 2*nn;
   return(sum);
 }
 
 int gradientDescent (int nn, double vx[], double vy[], double alpha, double *the0, double *the1)
- {
+{
   int i;
   double val;
   double z0,z1;
@@ -35,20 +35,20 @@ int gradientDescent (int nn, double vx[], double vy[], double alpha, double *the
   double error = 0.000009; // cinc decimals
   
   do
-   {
+  {
     z0 = z1 = 0.0;
     for(i=0;i<nn;i++)
-     {
+    {
       val = t0 + t1*vx[i] - vy[i];
       z0 += val;
       z1 += val * vx[i];
-     }
+    }
     t0 -= z0 * a_n;
     t1 -= z1 * a_n;
     iter++;
     ca = c;
     c = cost(nn,vx,vy,t0,t1);
-   }
+  }
   while (fabs(c - ca) > error);
   *the0 = t0;
   *the1 = t1;
@@ -63,10 +63,10 @@ double theta0=0, theta1=1;
 
   srand(1);
   for (i=0;i<N;i++) 
-   {
+  {
     X[i] = frand(13);
     Y[i] = frand(9) + ((1.66 + (frand(0.9))) *  X[i]) * X[i] ;
-   }
+  }
 
   //for (i=0;i<N;i++) printf("%g %g\n",X[i],Y[i]);
  
