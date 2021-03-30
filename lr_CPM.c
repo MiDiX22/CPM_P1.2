@@ -37,6 +37,7 @@ int gradientDescent (int nn, double vx[], double vy[], double alpha, double *the
   do
   {
     z0 = z1 = 0.0;
+    #pragma omp parallel for default(none) reduction(+:z0,z1) private(i, val) firstprivate(t0, t1, nn) shared(vx, vy) 
     for(i=0;i<nn;i++)
     {
       val = t0 + t1*vx[i] - vy[i];
